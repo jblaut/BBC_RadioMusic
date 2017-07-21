@@ -1,0 +1,21 @@
+body {
+  background-color:  #262525;
+  color: #fff;
+  text-align: center;
+  font-size: 40px;
+  font-family: sans-serif;
+}
+
+input {
+  border: 1px solid #000;
+  background-color: #767676;
+  font-size: 40px;
+}
+
+#loading {
+  display: none;
+}
+
+#results {
+  display: none;
+}
