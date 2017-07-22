@@ -14,7 +14,7 @@ function keychange() {
       results.empty();
 
       for (var i = 0; i < titlesArray.length; i++) {
-        var titles = titlesArray[i]['title'];
+        var titles = titlesArray[i]['programme']['title'];
         var synopsis = titlesArray[i]['programme']['short_synopsis'];
 
         if (titles.toLowerCase().search(searchKey) >= 0) {
@@ -43,6 +43,10 @@ function createProgramme(title, synopsis, image='') {
     image: image
   }
 
-  // Mustache render here
+  $('#results').show();
+  var titleElem = document.createElement("h1");
+  titleElem.appendChild(document.createTextNode(title));
+  $('#results').append(titleElem);
+
   console.log(programme);
 }
