@@ -10,6 +10,7 @@ function keychange() {
     apiRes.onload = function() {
       loading.hide();
       var titlesArray = JSON.parse(this.responseText);
+      var programmes = [];
 
       results.empty();
 
@@ -18,35 +19,51 @@ function keychange() {
         var synopsis = titlesArray[i]['programme']['short_synopsis'];
 
         if (titles.toLowerCase().search(searchKey) >= 0) {
+          $('#noResults').hide();
           if (titlesArray[i]['programme']['image'] != undefined && titlesArray[i]['programme']['image']['pid'] != undefined) {
             var imageID = titlesArray[i]['programme']['image']['pid'];
-            createProgramme(titles, synopsis, imageID);
+            programmes.push(createProgramme(titles, synopsis, imageID));
           } else {
-            createProgramme(titles, synopsis);
+            programmes.push(createProgramme(titles, synopsis));
           }
         }
       }
+      $('#results').append(programmes);
+      $('#results').show();
     };
 
     apiRes.open("get", "server/response.php", true);
     apiRes.send();
-  } else if (searchKey == "") {
+  } else {
     loading.hide();
     results.empty();
   }
-}
 
-function createProgramme(title, synopsis, image='') {
-  var programme = {
-    title: title,
-    synopsis: synopsis,
-    image: image
+  if ($("#results > div").length == 0) {
+    $('#noResults').show();
   }
-
-  $('#results').show();
-  var titleElem = document.createElement("h1");
-  titleElem.appendChild(document.createTextNode(title));
-  $('#results').append(titleElem);
-
-  console.log(programme);
 }
+
+function createProgramme(title, synopsis, imageID=null) {
+  var titleElem = document.createElement("h1");
+  titleElem.append(document.createTextNode(title));
+  var synopsisElem = document.createElement("p");
+  synopsisElem.append(document.createTextNode(synopsis));
+
+  var programme = document.createElement("div");
+  programme.className = "programme";
+  var innerDiv = document.createElement("div");
+  innerDiv.append(titleElem, synopsisElem);
+  innerDiv.className = "inner";
+
+  if (!imageID) {
+    programme.append(innerDiv);
+  } else {
+    var image = document.createElement("img");
+    image.src = "https://ichef.bbci.co.uk/images/ic/480x270/" + imageID + ".jpg";
+    programme.append(image, innerDiv);
+  }
+  return programme;
+}
+
+$("#title").keyup(keychange);
