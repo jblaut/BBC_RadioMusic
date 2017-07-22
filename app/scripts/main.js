@@ -1,30 +1,61 @@
+"use strict"
+
+class Programme {
+  constructor(title, synopsis, pid=null) {
+        this.title = title;
+        this.synopsis = synopsis;
+        this.pid = pid;
+    }
+
+    structure() {
+        let image = ""
+        if (this.pid) {
+          image = `<img src="https://ichef.bbci.co.uk/images/ic/480x270/${this.pid}.jpg">`;
+        }
+        return `<div class="programme">
+                  ${image}
+                  <div class="inner">
+                    <h1>${this.title}</h1>
+                    <p>${this.synopsis}</p>
+                  </div>
+                </div>`
+    }
+
+    print() {
+      console.log( this.structure() );
+    }
+}
+
 function keychange() {
-  var loading = $('#loading');
-  var searchKey = $('#title').val();
-  var results = $('#results');
+  const loading = $('#loading');
+  const searchKey = $('#title').val();
+  const results = $('#results');
 
   loading.show();
 
   if (searchKey != "") {
-    var apiRes = new XMLHttpRequest();
+    const apiRes = new XMLHttpRequest();
     apiRes.onload = function() {
       loading.hide();
-      var titlesArray = JSON.parse(this.responseText);
-      var programmes = [];
+      const titlesArray = JSON.parse(this.responseText);
+      const programmes = [];
 
       results.empty();
 
-      for (var i = 0; i < titlesArray.length; i++) {
-        var titles = titlesArray[i]['programme']['title'];
-        var synopsis = titlesArray[i]['programme']['short_synopsis'];
+      for (let i = 0; i < titlesArray.length; i++) {
+        const titles = titlesArray[i]['programme']['title'];
+        const synopsis = titlesArray[i]['programme']['short_synopsis'];
 
         if (titles.toLowerCase().search(searchKey) >= 0) {
           $('#noResults').hide();
-          if (titlesArray[i]['programme']['image'] != undefined && titlesArray[i]['programme']['image']['pid'] != undefined) {
-            var imageID = titlesArray[i]['programme']['image']['pid'];
-            programmes.push(createProgramme(titles, synopsis, imageID));
+          if (titlesArray[i]['programme']['image'] != undefined &&
+            titlesArray[i]['programme']['image']['pid'] != undefined) {
+            const imageID = titlesArray[i]['programme']['image']['pid'];
+            let programme = new Programme(titles, synopsis,imageID);
+            programmes.push(programme.structure());
           } else {
-            programmes.push(createProgramme(titles, synopsis));
+            let programme = new Programme(titles, synopsis);
+            programmes.push(programme.structure());
           }
         }
       }
@@ -42,28 +73,6 @@ function keychange() {
   if ($("#results > div").length == 0) {
     $('#noResults').show();
   }
-}
-
-function createProgramme(title, synopsis, imageID=null) {
-  var titleElem = document.createElement("h1");
-  titleElem.append(document.createTextNode(title));
-  var synopsisElem = document.createElement("p");
-  synopsisElem.append(document.createTextNode(synopsis));
-
-  var programme = document.createElement("div");
-  programme.className = "programme";
-  var innerDiv = document.createElement("div");
-  innerDiv.append(titleElem, synopsisElem);
-  innerDiv.className = "inner";
-
-  if (!imageID) {
-    programme.append(innerDiv);
-  } else {
-    var image = document.createElement("img");
-    image.src = "https://ichef.bbci.co.uk/images/ic/480x270/" + imageID + ".jpg";
-    programme.append(image, innerDiv);
-  }
-  return programme;
 }
 
 $("#title").keyup(keychange);
