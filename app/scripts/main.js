@@ -49,9 +49,9 @@ function keychange() {
         if (titles.toLowerCase().search(searchKey) >= 0) {
           $('#noResults').hide();
           if (titlesArray[i]['programme']['image'] != undefined &&
-            titlesArray[i]['programme']['image']['pid'] != undefined) {
+              titlesArray[i]['programme']['image']['pid'] != undefined) {
             const imageID = titlesArray[i]['programme']['image']['pid'];
-            let programme = new Programme(titles, synopsis,imageID);
+            let programme = new Programme(titles, synopsis, imageID);
             programmes.push(programme.structure());
           } else {
             let programme = new Programme(titles, synopsis);
