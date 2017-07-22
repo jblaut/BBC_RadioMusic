@@ -1,16 +1,15 @@
 <html>
 <head>
   <link rel="stylesheet" type="text/css" href="styles/main.css">
-  <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
-  <script src="scripts/main.js"></script>
 </head>
 <body>
   <form>
-      <input id="title" type="text" name="search" placeholder="Search" onkeyup="keychange()">
+      <input id="title" type="text" placeholder="Begin typing to search for a programme">
   </form>
   <div id="loading">Loading...</div>
-  <div id="results">
-
-  </div>
+  <div id="noResults">No Results</div>
+  <div id="results"></div>
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="scripts/main.js"></script>
 </body>
 </html>
