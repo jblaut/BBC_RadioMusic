@@ -3,13 +3,12 @@
 class Retrieve {
   constructor(path) {
     this.path = path;
-    this.data = "";
+    this.data;
   }
 
   filter(term, data) {
-    console.log(data)
-
     let programmes = [];
+
     for (let i = 0; i < data.length; i++) {
       const titles = data[i]['programme']['title'];
       const synopsis = data[i]['programme']['short_synopsis'];
@@ -27,12 +26,14 @@ class Retrieve {
         }
       }
     }
-    return programmes;
+
+    $('#results').empty().append(programmes).show();
   }
 
   search(searchTerm) {
-    if (this.data.length != 0) {
-      this.filter(searchTerm, this.data);
+    let result;
+    if (this.constructor.data != undefined) {
+      result = this.filter(searchTerm, this.constructor.data);
     } else {
       fetch(this.path).then(response => {
         if (response.ok) {
@@ -46,11 +47,9 @@ class Retrieve {
       .then(response => {
         return response.json();
       }).then(data => {
-        this.data = data;
-        this.filter(searchTerm, this.data);
-
+        this.constructor.data = data;
+        result = this.filter(searchTerm, this.constructor.data);
       })
-
     }
   }
 }
@@ -77,62 +76,29 @@ class Programme {
                   </div>
                 </div>`
     }
-
-    print() {
-      console.log( this.structure() );
-    }
 }
 
 function keychange() {
   const loading = $('#loading');
   const searchKey = $('#title').val();
   const results = $('#results');
+  const noResults = $('#noResults');
 
   loading.show();
 
   if (searchKey != "") {
-    const apiRes = new XMLHttpRequest();
-    apiRes.onload = function() {
-      loading.hide();
-      const titlesArray = JSON.parse(this.responseText);
-      const programmes = [];
-
-      results.empty();
-
-      for (let i = 0; i < titlesArray.length; i++) {
-        const titles = titlesArray[i]['programme']['title'];
-        const synopsis = titlesArray[i]['programme']['short_synopsis'];
-
-        if (titles.toLowerCase().search(searchKey) >= 0) {
-          $('#noResults').hide();
-          if (titlesArray[i]['programme']['image'] != undefined &&
-              titlesArray[i]['programme']['image']['pid'] != undefined) {
-            const imageID = titlesArray[i]['programme']['image']['pid'];
-            let programme = new Programme(titles, synopsis, imageID);
-            programmes.push(programme.structure());
-          } else {
-            let programme = new Programme(titles, synopsis);
-            programmes.push(programme.structure());
-          }
-        }
-      }
-      $('#results').append(programmes);
-      $('#results').show();
-    };
-
-    apiRes.open("get", "server/response.php", true);
-    apiRes.send();
+    let retriever = new Retrieve("server/response.php");
+    retriever.search(searchKey);
   } else {
     loading.hide();
     results.empty();
   }
 
   if ($("#results > div").length == 0) {
-    $('#noResults').show();
+    noResults.show();
+  } else {
+    loading.hide();
   }
 }
 
 $("#title").keyup(keychange);
-
-let retriever = new Retrieve("server/response.php");
-retriever.search("fry");
