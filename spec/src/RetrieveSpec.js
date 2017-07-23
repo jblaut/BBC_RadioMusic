@@ -42,4 +42,11 @@ describe('Retrieve', () => {
     expect($("#results > div").length).toBe(1);
     expect($("#results img")).not.toExist();
   });
+
+  it("should not find programmes not matching the search term", () => {
+    let retrieve = new Retrieve("/foo");
+    retrieve.filter("abcd", data);
+
+    expect($("#results > div").length).toBe(0);
+  });
 });
