@@ -1,26 +1,26 @@
-import {Retrieve} from './Retrieve';
+import {Retrieve} from './Retrieve'
 
-function keychange() {
-  const loading = $('#loading');
-  const searchKey = $('#title').val();
-  const results = $('#results');
-  const noResults = $('#noResults');
+function keychange () {
+  const loading = $('#loading')
+  const searchKey = $('#title').val()
+  const results = $('#results')
+  const noResults = $('#noResults')
 
-  loading.show();
+  loading.show()
 
-  if (searchKey != "") {
-    let retriever = new Retrieve("server/response.php");
-    retriever.search(searchKey);
+  if (searchKey !== '') {
+    let retriever = new Retrieve('server/response.php')
+    retriever.search(searchKey)
   } else {
-    loading.hide();
-    results.empty();
+    loading.hide()
+    results.empty()
   }
 
-  if ($("#results > div").length == 0) {
-    noResults.show();
+  if ($('#results > div').length === 0) {
+    noResults.show()
   } else {
-    loading.hide();
+    loading.hide()
   }
 }
 
-$("#title").keyup(keychange);
+$('#title').keyup(keychange)

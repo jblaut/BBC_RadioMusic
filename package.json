@@ -46,7 +46,7 @@
     "test": "karma start",
     "build": "rollup -c",
     "dev": "rollup -c -w",
-    "lint": "eslint app/** spec/**"
+    "lint": "eslint --fix app/**/*.js spec/**/*.js"
   },
   "repository": {
     "type": "git",

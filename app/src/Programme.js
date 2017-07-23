@@ -1,15 +1,15 @@
 export class Programme {
-  constructor(title, synopsis, pid=null) {
-    this.title = title;
-    this.synopsis = synopsis;
-    this.pid = pid;
+  constructor (title, synopsis, pid = null) {
+    this.title = title
+    this.synopsis = synopsis
+    this.pid = pid
   }
 
-  structure() {
-    let image = "";
+  structure () {
+    let image = ''
 
     if (this.pid) {
-      image = `<img src="https://ichef.bbci.co.uk/images/ic/480x270/${this.pid}.jpg">`;
+      image = `<img src="https://ichef.bbci.co.uk/images/ic/480x270/${this.pid}.jpg">`
     }
 
     return `<div class="programme">${image}<div class="inner"><h1>${this.title}</h1><p>${this.synopsis}</p></div></div>`
