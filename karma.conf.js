@@ -1,6 +1,7 @@
 // Karma configuration
 // Generated on Sun Jul 23 2017 14:30:47 GMT+0100 (GMT Summer Time)
 const buble = require('rollup-plugin-buble');
+const commonjs = require('rollup-plugin-commonjs');
 
 module.exports = function(config) {
   config.set({
@@ -11,14 +12,14 @@ module.exports = function(config) {
 
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-    frameworks: ['jasmine', 'requirejs'],
-
+    frameworks: ['jquery-3.2.1', 'jasmine-jquery', 'jasmine', 'requirejs'],
 
     // list of files / patterns to load in the browser
     files: [
       {pattern: 'app/src/**/*.js', included: false},
       'test-main.js',
-      {pattern: 'spec/**/*Spec.js', included: false}
+      {pattern: 'spec/**/*Spec.js', included: false},
+      {pattern: 'spec/javascripts/fixtures/*.html', included: false, served: true}
     ],
 
 
@@ -36,6 +37,12 @@ module.exports = function(config) {
     rollupPreprocessor: {
       // rollup settings. See Rollup documentation
       plugins: [
+        commonjs({
+          namedExports: {
+            'jquery/lib': ['jquery'],
+            'jasmine-jquery': ['jasmine-jquery']
+          }
+        }),
         buble({jsx: 'h'}) // ES2015 compiler by the same author as Rollup
       ],
       // will help to prevent conflicts between different tests entries

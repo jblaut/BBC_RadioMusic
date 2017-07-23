@@ -19,10 +19,4 @@ describe('Programme', () => {
 
      expect(result).toBe(`<div class="programme"><div class="inner"><h1>title</h1><p>synopsis</p></div></div>`)
    });
-
-   it("should create image tag if PID retrieved", () => {
-     let result = newProgramme("title", "synopsis", "p12i34d56");
-
-     expect(result).toBe(`<div class="programme"><img src="https://ichef.bbci.co.uk/images/ic/480x270/p12i34d56.jpg"><div class="inner"><h1>title</h1><p>synopsis</p></div></div>`)
-   });
 });

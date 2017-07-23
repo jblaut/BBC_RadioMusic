@@ -17,9 +17,13 @@
   "devDependencies": {
     "jasmine": "^2.6.0",
     "jasmine-core": "^2.6.4",
+    "jasmine-jquery": "^2.1.1",
+    "jquery": "^3.2.1",
     "karma": "^1.7.0",
     "karma-chrome-launcher": "^2.2.0",
     "karma-jasmine": "^1.1.0",
+    "karma-jasmine-jquery": "^0.1.1",
+    "karma-jquery": "^0.2.2",
     "karma-requirejs": "^1.1.0",
     "karma-rollup-plugin": "^0.2.4",
     "karma-rollup-preprocessor": "^4.0.1",
