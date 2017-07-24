@@ -50,3 +50,8 @@ describe('Retrieve', () => {
     expect($('#results > div').length).toBe(0)
   })
 })
+
+// there should be at least one more test here
+// to test the promises in the search function
+// most likely using an npm package which
+// allows for mocking of AJAX calls

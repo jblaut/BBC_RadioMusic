@@ -9,6 +9,7 @@ export class Programme {
     let image = ''
 
     if (this.pid) {
+      // if pid provided add an img tag to the programme div
       image = `<img src="https://ichef.bbci.co.uk/images/ic/480x270/${this.pid}.jpg">`
     }
 

@@ -17,6 +17,7 @@ export class Retrieve {
         $('#noResults').hide()
         if (data[i]['programme']['image'] !== undefined &&
             data[i]['programme']['image']['pid'] !== undefined) {
+          // check for image->pid, e.g. A Bit of Fry and Laurie which doesn't have a PID
           const imageID = data[i]['programme']['image']['pid']
           let programme = new Programme(titles, synopsis, imageID)
           programmes.push(programme.structure())
@@ -31,7 +32,8 @@ export class Retrieve {
   }
 
   search (searchTerm) {
-    // let result
+    // this if statement allows for the data to be retrieved once
+    // only makes an AJAX call if data is undefined
     if (this.constructor.data !== undefined) {
       result = this.filter(searchTerm, this.constructor.data)
     } else {
